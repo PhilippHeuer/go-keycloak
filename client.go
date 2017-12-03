@@ -27,7 +27,7 @@ type OIDCToken struct {
  * The keycloak client kind-of class
  */
 type KeycloakClient struct {
-	server string
+	Server					 string
 }
 
 /**
@@ -130,7 +130,7 @@ func (keycloakClient KeycloakClient) DirectGrantAuthentication(clientId string, 
 			"grant_type": "password",
 			"username":   username,
 			"password":   password,
-		}).Post(keycloakClient.server + "/auth/realms/" + realm + "/protocol/openid-connect/token")
+		}).Post(keycloakClient.Server + "/auth/realms/" + realm + "/protocol/openid-connect/token")
 	if err != nil {
 		return nil, err
 	}
@@ -163,7 +163,7 @@ func (keycloakClient KeycloakClient) GetUserListInRealm(token *OIDCToken, realm 
 	resp, err := resty.R().
 		SetHeader("Content-Type", "application/json").
 		SetHeader("Authorization", "Bearer " + token.AccessToken).
-		Get(keycloakClient.server + "/auth/admin/realms/" + realm + "/users")
+		Get(keycloakClient.Server + "/auth/admin/realms/" + realm + "/users")
 	if err != nil {
 		return nil, err
 	}
@@ -184,7 +184,7 @@ func (keycloakClient KeycloakClient) GetUserGroupsInRealm(token *OIDCToken, real
 	resp, err := resty.R().
 		SetHeader("Content-Type", "application/json").
 		SetHeader("Authorization", "Bearer " + token.AccessToken).
-		Get(keycloakClient.server + "/auth/admin/realms/" + realm + "/users/" + userId + "/groups")
+		Get(keycloakClient.Server + "/auth/admin/realms/" + realm + "/users/" + userId + "/groups")
 	if err != nil {
 		return nil, err
 	}
@@ -205,7 +205,7 @@ func (keycloakClient KeycloakClient) GetRoleMappingByGroupId(token *OIDCToken, r
 	resp, err := resty.R().
 		SetHeader("Content-Type", "application/json").
 		SetHeader("Authorization", "Bearer " + token.AccessToken).
-		Get(keycloakClient.server + "/auth/admin/realms/" + realm + "/groups/" + groupId + "/role-mappings")
+		Get(keycloakClient.Server + "/auth/admin/realms/" + realm + "/groups/" + groupId + "/role-mappings")
 	if err != nil {
 		return nil, err
 	}
@@ -248,7 +248,7 @@ func (keycloakClient KeycloakClient) GetGroupListByRealm(token *OIDCToken, realm
 	resp, err := resty.R().
 		SetHeader("Content-Type", "application/json").
 		SetHeader("Authorization", "Bearer " + token.AccessToken).
-		Get(keycloakClient.server + "/auth/admin/realms/" + realm + "/groups")
+		Get(keycloakClient.Server + "/auth/admin/realms/" + realm + "/groups")
 	if err != nil {
 		return nil, err
 	}
@@ -269,7 +269,7 @@ func (keycloakClient KeycloakClient) GetRolesByRealm(token *OIDCToken, realm str
 	resp, err := resty.R().
 		SetHeader("Content-Type", "application/json").
 		SetHeader("Authorization", "Bearer " + token.AccessToken).
-		Get(keycloakClient.server + "/auth/admin/realms/" + realm + "/roles")
+		Get(keycloakClient.Server + "/auth/admin/realms/" + realm + "/roles")
 	if err != nil {
 		return nil, err
 	}
@@ -290,7 +290,7 @@ func (keycloakClient KeycloakClient) GetRolesByClientId(token *OIDCToken, realm 
  	resp, err := resty.R().
  		SetHeader("Content-Type", "application/json").
  		SetHeader("Authorization", "Bearer " + token.AccessToken).
- 		Get(keycloakClient.server + "/auth/admin/realms/" + realm + "/clients/" + clientId + "/roles")
+ 		Get(keycloakClient.Server + "/auth/admin/realms/" + realm + "/clients/" + clientId + "/roles")
  	if err != nil {
  		return nil, err
  	}
@@ -307,11 +307,11 @@ func (keycloakClient KeycloakClient) GetRolesByClientId(token *OIDCToken, realm 
 /**
  * Get Clients by Realm
  */
-func (keycloakClient KeycloakClient) GetClientsByRealm(token *OIDCToken, realm string) (*[]KeycloakRealmClient, error) {
+func (keycloakClient KeycloakClient) GetClientsInRealm(token *OIDCToken, realm string) (*[]KeycloakRealmClient, error) {
  	resp, err := resty.R().
  		SetHeader("Content-Type", "application/json").
  		SetHeader("Authorization", "Bearer " + token.AccessToken).
- 		Get(keycloakClient.server + "/auth/admin/realms/" + realm + "/clients")
+ 		Get(keycloakClient.Server + "/auth/admin/realms/" + realm + "/clients")
  	if err != nil {
  		return nil, err
  	}
