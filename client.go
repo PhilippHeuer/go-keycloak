@@ -330,7 +330,7 @@ func (keycloakClient KeycloakClient) GetClientsByRealm(token *OIDCToken, realm s
  */
 func getBasicAuthForClient(clientId string, clientSecret string) string {
 	var httpBasicAuth string
-	if len(cfg.ClientId) > 0 && len(cfg.ClientSecret) > 0 {
+	if len(clientId) > 0 && len(clientSecret) > 0 {
 		httpBasicAuth = b64.URLEncoding.EncodeToString([]byte(clientId + ":" + clientSecret))
 	}
 
